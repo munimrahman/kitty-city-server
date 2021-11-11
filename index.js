@@ -43,6 +43,13 @@ async function run() {
             })
         });
 
+        // Add a Product API
+        app.post('/products', async (req, res) => {
+            const product = req.body;
+            const result = await productsCollection.insertOne(product);
+            res.json(result);
+        })
+
         // Get Single Product By ID
         app.get('/products/:id', async (req, res) => {
             const id = req.params.id;
@@ -50,6 +57,7 @@ async function run() {
             const result = await productsCollection.findOne(query);
             res.json(result);
         })
+
         // Find Products byKeys For Cart
         app.post('/products/byKeys', async (req, res) => {
             const keys = req.body;
@@ -57,6 +65,15 @@ async function run() {
             const cartProducts = await productsCollection.find(query).toArray();
             res.json(cartProducts);
         })
+
+        // Delete Order
+        app.delete('/products/:id', async (req, res) => {
+            const id = req.params.id;
+            const query = { _id: ObjectId(id) }
+            const result = await productsCollection.deleteOne(query);
+            res.json(result);
+        })
+
         // Create Order API
         app.post('/orders', async (req, res) => {
             const order = req.body;
