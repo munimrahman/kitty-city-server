@@ -105,7 +105,7 @@ async function run() {
         app.put('/orders/:id', async (req, res) => {
             const id = req.params.id;
             const updateInfo = req.body;
-            console.log(id);
+            // console.log(id);
             const filter = { _id: ObjectId(id) };
             const updateDoc = {
                 $set: {
